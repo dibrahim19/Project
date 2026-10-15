@@ -1,4 +1,5 @@
 ﻿
+using Project;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,8 @@ namespace MyFirstApp
                 Console.WriteLine("1. Create Crossword");
                 Console.WriteLine("2. Add User");
                 Console.WriteLine("3. Add Clue");
-                Console.WriteLine("4. Logout");
+                Console.WriteLine("4. Play Crossword");
+                Console.WriteLine("5. Logout");
                 int user_choice = int.Parse(Console.ReadLine());
                 switch (user_choice)
                 {
@@ -53,7 +55,10 @@ namespace MyFirstApp
                             }
                         }
                         break;
-                    case 4:
+
+                    case 4: 
+                       
+                    case 5:
                         isLoggedIn = false;
                         break;
                     default:
@@ -77,6 +82,25 @@ namespace MyFirstApp
                 {
                     case 1:
                         // Play Crossword
+                        Crossword_Class selectedCrossword = Crossword.SelectCrossword();
+                        if (selectedCrossword != null)
+                        {
+                            //Build the display grid for the selected crossword
+                            char[][] displayGrid = Crossword.BuildDisplayGrid(selectedCrossword);
+
+                            //start cursor in the top left corner of the grid
+                            int cursorRow = 0;
+                            int cursorColumn = 0;
+
+                            //Display the grid with the cursor at the starting position
+                            Crossword.DisplayGrid(displayGrid, cursorRow, cursorColumn);
+
+
+                            //navigate the crossword grid using arrow keys and fill in answers
+                            Console.ReadKey();
+                            
+                        
+                        }
                         break;
                     case 2:
                         // View Clue
