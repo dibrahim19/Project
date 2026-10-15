@@ -56,8 +56,29 @@ namespace MyFirstApp
                         }
                         break;
 
-                    case 4: 
-                       
+                    case 4:
+                        // Play Crossword
+                        Crossword_Class selectedCrossword = Crossword.SelectCrossword();
+                        if (selectedCrossword != null)
+                        {
+                            //Build the display grid for the selected crossword
+                            char[][] displayGrid = Crossword.BuildDisplayGrid(selectedCrossword);
+
+                            //start cursor in the top left corner of the grid
+                            int cursorRow = 0;
+                            int cursorColumn = 0;
+
+                            //Display the grid with the cursor at the starting position
+                            Crossword.DisplayGrid(displayGrid, cursorRow, cursorColumn);
+
+
+                            //navigate the crossword grid using arrow keys and fill in answers
+                            Console.ReadKey();
+
+
+                        }
+                        break;
+
                     case 5:
                         isLoggedIn = false;
                         break;
