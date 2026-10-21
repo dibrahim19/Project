@@ -132,9 +132,68 @@ namespace MyFirstApp
                     }
                 }
                 Console.WriteLine();
-
             }
 
         }
+        public static void PlayCrossword(Crossword_Class crossword)
+        {
+            //build the display grid from the solution grid
+            char[][] displayGrid = Crossword.BuildDisplayGrid(crossword);
+
+            //start cursor in the top left corner 
+            int cursorRow = 0;
+            int cursorColumn = 0;
+
+            //draw the grid for the first time before any input 
+            DisplayGrid(displayGrid, cursorRow, cursorColumn);
+
+            //keep looping until user presses escape key
+            bool playing = true;
+            while (playing)
+            {
+                //read single keypresses instantly without waiting for enter
+                ConsoleKeyInfo keyPress = Console.ReadKey(true);
+
+                switch (keyPress.Key)
+                {
+                    case ConsoleKey.UpArrow:
+                        if (cursorRow > 0)
+                        {
+                            cursorRow--;
+                        }
+                        break;
+
+                    case ConsoleKey.DownArrow:
+                        if (cursorRow < crossword.Rows - 1)
+                        {
+                            cursorRow++;
+                        }
+                        break;
+
+                    case ConsoleKey.LeftArrow:
+                        if (cursorColumn > 0)
+                        {
+                            cursorColumn--;
+                        }
+                        break;
+
+                    case ConsoleKey.RightArrow:
+                        if (cursorColumn < crossword.Columns - 1)
+                        {
+                            cursorColumn++;
+                        }
+                        break;
+
+                    case ConsoleKey.Escape:
+                        playing = false;
+                        break;
+
+                }
+                DisplayGrid(displayGrid, cursorRow, cursorColumn);
+
+            }
+        }
+
+
     }
 }

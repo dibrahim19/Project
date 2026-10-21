@@ -1,5 +1,4 @@
 ﻿
-using Project;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,25 +56,10 @@ namespace MyFirstApp
                         break;
 
                     case 4:
-                        // Play Crossword
                         Crossword_Class selectedCrossword = Crossword.SelectCrossword();
                         if (selectedCrossword != null)
                         {
-                            //Build the display grid for the selected crossword
-                            char[][] displayGrid = Crossword.BuildDisplayGrid(selectedCrossword);
-
-                            //start cursor in the top left corner of the grid
-                            int cursorRow = 0;
-                            int cursorColumn = 0;
-
-                            //Display the grid with the cursor at the starting position
-                            Crossword.DisplayGrid(displayGrid, cursorRow, cursorColumn);
-
-
-                            //navigate the crossword grid using arrow keys and fill in answers
-                            Console.ReadKey();
-
-
+                            Crossword.PlayCrossword(selectedCrossword);
                         }
                         break;
 
@@ -99,31 +83,16 @@ namespace MyFirstApp
                 Console.WriteLine("2. View Clue");
                 Console.WriteLine("3. Logout");
                 int user_choice = int.Parse(Console.ReadLine());
-                switch (user_choice)
-                {
+                switch (user_choice) 
+                { 
                     case 1:
-                        // Play Crossword
                         Crossword_Class selectedCrossword = Crossword.SelectCrossword();
                         if (selectedCrossword != null)
                         {
-                            //Build the display grid for the selected crossword
-                            char[][] displayGrid = Crossword.BuildDisplayGrid(selectedCrossword);
-
-                            //start cursor in the top left corner of the grid
-                            int cursorRow = 0;
-                            int cursorColumn = 0;
-
-                            //Display the grid with the cursor at the starting position
-                            Crossword.DisplayGrid(displayGrid, cursorRow, cursorColumn);
-
-
-                            //navigate the crossword grid using arrow keys and fill in answers
-                            Console.ReadKey();
-                            
-                        
+                            Crossword.PlayCrossword(selectedCrossword);
                         }
                         break;
-                    case 2:
+                case 2:
                         // View Clue
                         ViewClues viewer = new ViewClues();
                         viewer.DisplayClues();
