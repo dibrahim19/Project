@@ -188,11 +188,109 @@ namespace MyFirstApp
                         playing = false;
                         break;
 
+                    case ConsoleKey.C:
+                        CheckAnswers(crossword, displayGrid);
+                        break;
+
+                    case ConsoleKey.R:
+                        RevealAnswers(crossword, displayGrid);
+                        break;
+
+                    default:
+                        //Checks if the key pressed is a letter
+                        if (char.IsLetter(keyPress.KeyChar))
+                        {
+                            //onlw allow letters to be entered into the grid
+                            if (displayGrid[cursorRow][cursorColumn] != GridSymbols.Empty)
+                            {
+                                //making sure letters are uppercase
+                                displayGrid[cursorRow][cursorColumn] = char.ToUpper(keyPress.KeyChar);
+
+                                if (cursorColumn < crossword.Columns - 1)
+                                {
+                                    cursorColumn++;
+                                }
+                            }
+                        }
+                        break;
+
                 }
                 DisplayGrid(displayGrid, cursorRow, cursorColumn);
 
             }
         }
+
+        public static void CheckAnswers(Crossword_Class crossword, char[][] displayGrid)
+        {
+            int correct = 0;
+            int incorrect = 0;
+            int unanswered = 0;
+
+            for(int row = 0; row < crossword.Rows; row++)
+            {
+                for (int column = 0; column < crossword.Columns; column++)
+                {
+                    // make sure empty skill, dont check
+                    if (crossword.Grid[row][column] == GridSymbols.Empty)
+                        continue;
+
+                    //skip block player hasnt guessed yet
+                    if (displayGrid[row][column] == GridSymbols.Blank)
+                    {
+                        unanswered++;
+                    }
+                    // if guess is a match
+                    else if (displayGrid[row][column] == crossword.Grid[row][column])
+                    {
+                        correct++;
+                    }
+                    //if guess is wrong
+                    else
+                    {
+                        incorrect++;
+                    }
+                }
+            }
+            //answers revealed 
+
+            Console.Clear();
+            Console.WriteLine("=== Answer Report ===");
+            Console.WriteLine($"Correct: {correct}");
+            Console.WriteLine($"Incorrect: {incorrect}");
+            Console.WriteLine($"Unanswered: {unanswered}");
+
+            if (incorrect == 0 && unanswered == 0)
+            {
+                Console.WriteLine("Completed it mate");
+            }
+            else
+            {
+                Console.WriteLine("Keep going! Press any key to continue...");
+            }
+            Console.ReadKey(true);
+        }
+
+        public static void RevealAnswers (Crossword_Class crossword, char[][] displayGrid)
+        {
+            for (int row = 0; row < crossword.Rows; row++)
+            {
+                for (int column = 0; column < crossword.Columns; column++)
+                {
+                    //add all letters onto the main display grid
+                    if (crossword.Grid[row][column] != GridSymbols.Empty)
+                    {
+                        displayGrid[row][column] = crossword.Grid[row][column];
+                    }
+                }
+            }
+
+            Console.Clear();
+            Console.WriteLine("=== Revealed Answers ===");
+            DisplayGrid(displayGrid, -1, -1);
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey(true);
+        }
+        
 
 
     }
