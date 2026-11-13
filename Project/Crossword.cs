@@ -23,13 +23,15 @@ namespace MyFirstApp
             Console.Write("Enter the number of columns:");
             crossword.Columns = int.Parse(Console.ReadLine());
 
-            crossword.Grid = new char[crossword.Rows][];  // ⬅️ Jagged array
-            for (int row = 0; row < crossword.Rows; row++)
+            //step 1: creating the outer array (The rows container)
+            crossword.Grid = new char[crossword.Rows][];  //  Jagged array
+
+            for (int row = 0; row < crossword.Rows; row++) //step 2 create each inner array
             {
-                crossword.Grid[row] = new char[crossword.Columns];  // ⬅️ Initialize each row
+                crossword.Grid[row] = new char[crossword.Columns];  //  Initialize each row
                 for (int column = 0; column < crossword.Columns; column++)
                 {
-                    crossword.Grid[row][column] = '*';  // ⬅️ Syntax changes slightly
+                    crossword.Grid[row][column] = '*';  // step 3 fill every cell block with the symbol *
                 }
             }
 
@@ -86,6 +88,7 @@ namespace MyFirstApp
 
         public static char[][] BuildDisplayGrid(Crossword_Class crossword)
         {
+            //Display grid that players will view and show '_'
             //create a new empty jagged arary the same size as the solution grid
             char[][] displayGrid = new char[crossword.Rows][];
 
@@ -99,11 +102,11 @@ namespace MyFirstApp
                     //mirror that in display grid
                     if (crossword.Grid[row][column] == GridSymbols.Empty)
                     {
-                        displayGrid[row][column] = GridSymbols.Empty;
+                        displayGrid[row][column] = GridSymbols.Empty; // mark cell with '*'
                     }
                     else
                     {
-                        displayGrid[row][column] = GridSymbols.Blank;
+                        displayGrid[row][column] = GridSymbols.Blank; // mark cell with '_'
                     }
                 }
             }
@@ -120,9 +123,9 @@ namespace MyFirstApp
             {
                 for (int column = 0; column < displayGrid[row].Length; column++)
                 {
-                    if (row == cursorRow && column == cursorColumn)
+                    if (row == cursorRow && column == cursorColumn) //track where player is
                     {
-                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.ForegroundColor = ConsoleColor.Green; //highlight cursor
                         Console.Write(displayGrid[row][column] + " ");
                         Console.ResetColor();
                     }

@@ -14,10 +14,10 @@ namespace MyFirstApp
         public static Clue_Class AddClue(List<Clue_Class> Clues, Crossword_Class crossword)
         {
             Clue_Class Clue = new Clue_Class();
-            Clue.CrosswordTitle = crossword.Title;
+            Clue.CrosswordTitle = crossword.Title; // link to this crossword via title
 
             Console.WriteLine("Enter the word for the clue:");
-            Clue.Word = Console.ReadLine().ToUpper();
+            Clue.Word = Console.ReadLine().ToUpper(); //always stores letters inputted upper case
 
             Console.WriteLine("Enter the hint for the clue:");
             Clue.Hint = Console.ReadLine();
@@ -31,6 +31,7 @@ namespace MyFirstApp
             Console.WriteLine("Enter the column number for the clue:");
             Clue.Column = int.Parse(Console.ReadLine());
 
+            //placing word on grid
             if (!PlaceWordInGrid(crossword, Clue))
             {
                 Console.WriteLine("That word doesn't fit on the grid. Clue was not saved.");
@@ -56,8 +57,10 @@ namespace MyFirstApp
                     return false;
                 }
 
+                //write this letter into the solution grid
                 crossword.Grid[row][column] = clue.Word[i];
 
+                //move onto the next cell
                 if (clue.Direction == "across")
                 {
                     column++;
