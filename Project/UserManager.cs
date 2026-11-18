@@ -48,7 +48,7 @@ namespace MyFirstApp
             File.WriteAllText("clues.json", json);
         }
         //load users function to load clues from clues.json
-        public static List<Clue_Class> LoadUsersFromFile()
+        public static List<Clue_Class> LoadCluesFromFile()
         {
             string json = File.ReadAllText("clues.json");
             List<Clue_Class> clues = JsonSerializer.Deserialize<List<Clue_Class>>(json);

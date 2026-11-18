@@ -19,7 +19,7 @@ namespace MyFirstApp
             Console.WriteLine("Enter your password:");
             string password = Console.ReadLine();
             //promt user role
-            Console.WriteLine("Enter User Role (0 for User, 1 for Admin):");
+            Console.WriteLine("Enter User Role (0 for Admin, 1 for Player):");
             int role = int.Parse(Console.ReadLine());
 
             User newUser = new User();

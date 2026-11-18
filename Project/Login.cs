@@ -22,14 +22,14 @@ namespace MyFirstApp
             {
                 if (users[currentindex].Username == username && users[currentindex].Password == password)
                 {
-                    if (users[currentindex].Role == 1)
+                    if (users[currentindex].Role == 0)
                     {
                         Console.WriteLine("Welcome Admin!");
                         Menu.AdminMenu(users);
                     }
-                    else if (users[currentindex].Role == 0)
+                    else if (users[currentindex].Role == 1)
                     {
-                        Console.WriteLine("Welcome User!");
+                        Console.WriteLine("Welcome Player!");
                         Menu.PlayerMenu();
                     }
                     return users[currentindex];
