@@ -55,24 +55,30 @@ namespace MyFirstApp
             return clues;
         }
 
-        public static void CrosswordFileExistanceCheck()
+        // save a single crossword to its own file named after the crossword title
+        public static void saveCrosswordsToFile(Crossword_Class crossword)
         {
-            if (!File.Exists("crosswords.json"))
+            string filename = crossword.Title + ".json";
+            string json = JsonSerializer.Serialize(crossword);
+            File.WriteAllText(filename, json);
+        }
+
+        // Load all individual crossword files from disk (excludes users.json and clues.json)
+        public static List<Crossword_Class> LoadAllCrosswordsFromFiles()
+        {
+            List<Crossword_Class> crosswords = new List<Crossword_Class>();
+
+            List<string> files = Directory.GetFiles(".", "*.json")
+                .Where(f => f != ".\\users.json" && f != ".\\clues.json")
+                .ToList();
+
+            foreach (string file in files)
             {
-                File.WriteAllText("crosswords.json", "[]");
+                string json = File.ReadAllText(file);
+                Crossword_Class crossword = JsonSerializer.Deserialize<Crossword_Class>(json);
+                crosswords.Add(crossword);
             }
-        }
 
-        public static void saveCrosswordsToFile(List<Crossword_Class> crosswords)
-        {
-            string json = JsonSerializer.Serialize(crosswords);
-            File.WriteAllText("crosswords.json", json);
-        }
-
-        public static List<Crossword_Class> LoadCrosswordsFromFile()
-        {
-            string json = File.ReadAllText("crosswords.json");
-            List<Crossword_Class> crosswords = JsonSerializer.Deserialize<List<Crossword_Class>>(json);
             return crosswords;
         }
     }

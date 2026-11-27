@@ -2,7 +2,7 @@
 
 try
 {
-
+    // Load all data files on startup; catch handles corrupted/mismatched JSON the existence checks miss
 
     // Making sure that JSON files exist on disk
     UserManager.UserFileExistanceCheck();
@@ -27,9 +27,7 @@ try
     UserManager.ClueFileExistanceCheck();
     Clue.Clues = UserManager.LoadCluesFromFile();
 
-    UserManager.CrosswordFileExistanceCheck();
-    Crossword.Crosswords = UserManager.LoadCrosswordsFromFile();
-
+    Crossword.Crosswords = UserManager.LoadAllCrosswordsFromFiles();
     bool isRunning = true;
 
     while (isRunning)

@@ -25,11 +25,8 @@ namespace MyFirstApp
             Console.WriteLine("Enter the direction for the clue (across or down):");
             Clue.Direction = Console.ReadLine().ToLower();
 
-            Console.WriteLine("Enter the row number for the clue:");
-            Clue.Row = int.Parse(Console.ReadLine());
-
-            Console.WriteLine("Enter the column number for the clue:");
-            Clue.Column = int.Parse(Console.ReadLine());
+            // Use arrow key navigation to select the start position on the grid
+            (Clue.Row, Clue.Column) = Crossword.SelectStartPosition(crossword);
 
             //placing word on grid
             if (!PlaceWordInGrid(crossword, Clue))
@@ -40,7 +37,7 @@ namespace MyFirstApp
 
             Clues.Add(Clue);
             UserManager.saveCluesToFile(Clues);
-            UserManager.saveCrosswordsToFile(Crossword.Crosswords);
+            UserManager.saveCrosswordsToFile(crossword);
             return Clue;
         }
 
@@ -49,10 +46,13 @@ namespace MyFirstApp
             int row = clue.Row;
             int column = clue.Column;
 
+            //Loop once through each letter in the word and place it in the grid
             for (int i = 0; i < clue.Word.Length; i++)
             {
                 // Bounds check: does this letter still land inside the grid?
+               
                 if (row < 0 || row >= crossword.Rows || column < 0 || column >= crossword.Columns)
+                //checks if letter is off the grid: row<0 = off top, row>=Rows = off bottom, col<0 = off left, col>=Cols = off right
                 {
                     return false;
                 }

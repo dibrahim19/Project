@@ -36,7 +36,7 @@ namespace MyFirstApp
             }
 
             crosswords.Add(crossword);
-            UserManager.saveCrosswordsToFile(crosswords);
+            UserManager.saveCrosswordsToFile(crossword);
 
             return crossword;
 
@@ -89,8 +89,8 @@ namespace MyFirstApp
         public static char[][] BuildDisplayGrid(Crossword_Class crossword)
         {
             //Display grid that players will view and show '_'
-            //create a new empty jagged arary the same size as the solution grid
-            char[][] displayGrid = new char[crossword.Rows][];
+            //create a new empty jagged array the same size as the solution grid
+            char[][] displayGrid = new char[crossword.Rows][]; 
 
             for (int row = 0; row < crossword.Rows; row++)
             {
@@ -125,7 +125,7 @@ namespace MyFirstApp
                 {
                     if (row == cursorRow && column == cursorColumn) //track where player is
                     {
-                        Console.ForegroundColor = ConsoleColor.Green; //highlight cursor
+                        Console.ForegroundColor = ConsoleColor.Red; //highlight cursor
                         Console.Write(displayGrid[row][column] + " ");
                         Console.ResetColor();
                     }
@@ -135,9 +135,63 @@ namespace MyFirstApp
                     }
                 }
                 Console.WriteLine();
-            }
-
+            } 
         }
+
+        // Task 6: Arrow key navigation to select word start position on the grid
+        public static (int row, int column) SelectStartPosition(Crossword_Class crossword)
+        {
+            int cursorRow = 0;
+            int cursorColumn = 0;
+
+            while (true)
+            {
+                // Show the solution grid with the cursor highlighted in red
+                Console.Clear();
+                Console.WriteLine("Use Arrow keys to move. Press ENTER to select start position.");
+                Console.WriteLine();
+
+                for (int row = 0; row < crossword.Rows; row++)
+                {
+                    for (int column = 0; column < crossword.Columns; column++)
+                    {
+                        if (row == cursorRow && column == cursorColumn)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write("* ");
+                            Console.ResetColor();
+                        }
+                        else
+                        {
+                            Console.Write(crossword.Grid[row][column] + " ");
+                        }
+                    }
+                    Console.WriteLine();
+                }
+
+                ConsoleKeyInfo keyPress = Console.ReadKey(true);
+
+                switch (keyPress.Key)
+                {
+                    case ConsoleKey.UpArrow:
+                        if (cursorRow > 0) cursorRow--;
+                        break;
+                    case ConsoleKey.DownArrow:
+                        if (cursorRow < crossword.Rows - 1) cursorRow++;
+                        break;
+                    case ConsoleKey.LeftArrow:
+                        if (cursorColumn > 0) cursorColumn--;
+                        break;
+                    case ConsoleKey.RightArrow:
+                        if (cursorColumn < crossword.Columns - 1) cursorColumn++;
+                        break;
+                    case ConsoleKey.Enter:
+                        // Return the selected position
+                        return (cursorRow, cursorColumn);
+                }
+            }
+        }
+        
         public static void PlayCrossword(Crossword_Class crossword)
         {
             //build the display grid from the solution grid
@@ -160,13 +214,16 @@ namespace MyFirstApp
                 switch (keyPress.Key)
                 {
                     case ConsoleKey.UpArrow:
+                        //if cursor is greater than 0, then it can move up one row
                         if (cursorRow > 0)
                         {
+                            //  cursor goes up one row, 
                             cursorRow--;
                         }
                         break;
 
                     case ConsoleKey.DownArrow:
+                        //if cursor is less than the last row, then it can move down one row
                         if (cursorRow < crossword.Rows - 1)
                         {
                             cursorRow++;
@@ -174,6 +231,7 @@ namespace MyFirstApp
                         break;
 
                     case ConsoleKey.LeftArrow:
+                        //if cursor is greater than 0, then it can move left one column
                         if (cursorColumn > 0)
                         {
                             cursorColumn--;
@@ -181,6 +239,7 @@ namespace MyFirstApp
                         break;
 
                     case ConsoleKey.RightArrow:
+                        //if cursor is less than the last column, then it can move right one column
                         if (cursorColumn < crossword.Columns - 1)
                         {
                             cursorColumn++;
@@ -275,13 +334,16 @@ namespace MyFirstApp
 
         public static void RevealAnswers (Crossword_Class crossword, char[][] displayGrid)
         {
+            // Loop through each cell in the crossword grid
             for (int row = 0; row < crossword.Rows; row++)
             {
+                // Loop through each column in the current row
                 for (int column = 0; column < crossword.Columns; column++)
                 {
                     //add all letters onto the main display grid
                     if (crossword.Grid[row][column] != GridSymbols.Empty)
                     {
+                        //if the cell is not empty, then reveal the answer
                         displayGrid[row][column] = crossword.Grid[row][column];
                     }
                 }
