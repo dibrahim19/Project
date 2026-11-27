@@ -11,19 +11,24 @@ namespace MyFirstApp
 {
     internal class UserManager
     {
+        // file checking 
         public static void UserFileExistanceCheck()
         {
+            // checking if file exists
             if (!File.Exists("users.json"))
             {
+                // if not create file
                 File.WriteAllText("users.json", "[]");
 
             }
         }
+        // saving users to json file 
         public static void saveUsersToFile(List<User> users)
         {
             string json = JsonSerializer.Serialize(users);
             File.WriteAllText("users.json", json);
         }
+        // loading saved users json file
         public static List<User> loadUsersFromFile()
         {
             string json = File.ReadAllText("users.json");
@@ -66,6 +71,7 @@ namespace MyFirstApp
         // Load all individual crossword files from disk (excludes users.json and clues.json)
         public static List<Crossword_Class> LoadAllCrosswordsFromFiles()
         {
+            
             List<Crossword_Class> crosswords = new List<Crossword_Class>();
 
             List<string> files = Directory.GetFiles(".", "*.json")

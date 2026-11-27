@@ -14,12 +14,12 @@ namespace MyFirstApp
             bool isLoggedIn = true;
             while (isLoggedIn)
             {
-                Console.WriteLine("Admin Menu");
                 Console.WriteLine("1. Create Crossword");
                 Console.WriteLine("2. Add User");
                 Console.WriteLine("3. Add Clue");
                 Console.WriteLine("4. Play Crossword");
-                Console.WriteLine("5. Logout");
+                Console.WriteLine("5. Load Crosswords");
+                Console.WriteLine("6. Logout");
                 int user_choice = int.Parse(Console.ReadLine());
                 switch (user_choice)
                 {
@@ -63,7 +63,14 @@ namespace MyFirstApp
                         }
                         break;
 
+                    // reload all crossword .json files from disk back into memory
                     case 5:
+                        Crossword.Crosswords = UserManager.LoadAllCrosswordsFromFiles();
+                        Console.WriteLine("Crosswords loaded successfully.");
+                        Console.ReadKey(true);
+                        break;
+
+                    case 6:
                         isLoggedIn = false;
                         break;
                     default:

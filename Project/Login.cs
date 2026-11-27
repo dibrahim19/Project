@@ -12,6 +12,7 @@ namespace MyFirstApp
 
         public static User UserLogin(List<User> users)
         {
+            // welcome user to login page
             Console.WriteLine("Login to your account!");
             Console.WriteLine("-----------------------");
             Console.Write("Enter your username: ");
@@ -40,6 +41,7 @@ namespace MyFirstApp
                     return users[currentindex];
                 }
             }
+            // error messaage 
             Console.WriteLine("Invalid username or password. Please try again.");
             return null;
         }

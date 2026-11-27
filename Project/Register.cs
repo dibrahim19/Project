@@ -22,12 +22,15 @@ namespace MyFirstApp
             Console.WriteLine("Enter User Role (0 for Admin, 1 for Player):");
             int role = int.Parse(Console.ReadLine());
 
+            // creating object
             User newUser = new User();
 
+            // store username, password and role 
             newUser.Username = username;
             newUser.Password = password;
             newUser.Role = role;
 
+            // append to list, add to memoory list and persist to users.json
             users.Add(newUser);
             UserManager.saveUsersToFile(users);
             return newUser;
